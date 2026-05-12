@@ -498,7 +498,8 @@ footer{text-align:center;padding:3rem;border-top:1px solid var(--glass-border);p
   .nav-links,.nav-cta{display:none;}
   .nav-hamburger{display:flex;}
   .hero{grid-template-columns:1fr;padding:4rem 1.5rem 3rem;gap:3rem;}
-  .mockup-wrap{order:-1;}
+  .hero-left{order:1;}
+  .mockup-wrap{order:2;}
   .features-grid{grid-template-columns:repeat(2,1fr);}
   .levels-grid,.b2b-inner,.contact-wrap{grid-template-columns:1fr;}
   .wrap,.cafe-section,.b2b-section,.contact-section,.section-divider{padding-left:1.5rem;padding-right:1.5rem;}
@@ -785,7 +786,7 @@ footer{text-align:center;padding:3rem;border-top:1px solid var(--glass-border);p
         <h2 class="b2b-h2">¿TIENES UN GYM?<br>TE HACEMOS TU APP.</h2>
         <p class="b2b-sub">Plataformas fitness premium con tu branding. Tu nombre, tus colores, tu comunidad.</p>
         <div class="b2b-btns">
-          <button class="btn-primary" onclick="showToast('📩 En breve te contactamos por WhatsApp')">Quiero mi app</button>
+          <button class="btn-primary" onclick="sendB2BWhatsApp()">Quiero mi app</button>
           <button class="btn-outline" onclick="openNewsModal()">Ver demo</button>
         </div>
       </div>
@@ -846,7 +847,7 @@ footer{text-align:center;padding:3rem;border-top:1px solid var(--glass-border);p
   <p class="footer-name">MACNOFIT</p>
   <p class="footer-tag">Fitness Intelligence</p>
   <p class="footer-credit">Desarrollado por <strong>Roberto Macedo</strong></p>
-  <p class="footer-copy">© 2025 MACNOFIT · Todos los derechos reservados</p>
+  <p class="footer-copy">© 2026 MACNOFIT · Todos los derechos reservados</p>
 </footer>
 
 <script>
@@ -893,7 +894,13 @@ function openModal(){ document.getElementById('demoModal').style.display='flex';
 function closeModal(){ document.getElementById('demoModal').style.display='none'; }
 document.getElementById('demoModal').addEventListener('click', e => { if(e.target===e.currentTarget) closeModal(); });
 
-/* ── WHATSAPP ── */
+/* ── WHATSAPP B2B ── */
+function sendB2BWhatsApp(){
+  const txt = 'Hola! Me interesa tener mi propia app para mi gimnasio con MACNOFIT. ¿Me pueden dar más información?';
+  window.open(`https://wa.me/525572880383?text=${encodeURIComponent(txt)}`, '_blank');
+}
+
+/* ── WHATSAPP CONTACTO ── */
 function sendWhatsApp(){
   const nombre = document.getElementById('gymName').value.trim();
   const email  = document.getElementById('gymEmail').value.trim();
