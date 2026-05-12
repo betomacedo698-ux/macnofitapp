@@ -955,17 +955,32 @@ function openNewsModal(){
 function closeNewsModal(){ document.getElementById('newsModal').style.display='none'; }
 document.getElementById('newsModal').addEventListener('click', e=>{ if(e.target===e.currentTarget) closeNewsModal(); });
 
-function submitNewsletter(){
+async function submitNewsletter(){
   const name  = document.getElementById('newsName').value.trim();
   const email = document.getElementById('newsEmail').value.trim();
   if(!email || !email.includes('@')){ showToast('⚠️ Ingresa un correo válido'); return; }
-  // Aquí puedes conectar a Mailchimp, ConvertKit, Resend, etc.
-  // Por ahora guardamos en localStorage como prueba
-  const leads = JSON.parse(localStorage.getItem('macnofit_leads')||'[]');
-  leads.push({ name, email, date: new Date().toISOString() });
-  localStorage.setItem('macnofit_leads', JSON.stringify(leads));
-  document.getElementById('newsForm').style.display='none';
-  document.getElementById('newsSuccess').style.display='flex';
+
+  const btn = document.querySelector('.btn-news-submit');
+  btn.textContent = 'Enviando...';
+  btn.disabled = true;
+
+  const GS_URL = 'https://script.google.com/macros/s/AKfycbyB_ZjxU2Q8C864ILMcAxjsS1REG12J5VRer1LSzp2L6ieEqtRWOKpNg0gi8n3U-ct0aQ/exec';
+
+  try {
+    await fetch(GS_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, email, date: new Date().toISOString() })
+    });
+    // no-cors no devuelve respuesta legible, pero si no lanza error = éxito
+    document.getElementById('newsForm').style.display='none';
+    document.getElementById('newsSuccess').style.display='flex';
+  } catch(err) {
+    showToast('❌ Error al enviar. Intenta de nuevo.');
+    btn.textContent = '🔥 QUIERO ACCESO ANTICIPADO';
+    btn.disabled = false;
+  }
 }
 
 /* ── FADE UP ── */
