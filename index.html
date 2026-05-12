@@ -430,14 +430,59 @@ input::placeholder,textarea::placeholder{color:var(--muted2);}
 
 /* ── FOOTER ── */
 footer{text-align:center;padding:3rem;border-top:1px solid var(--glass-border);position:relative;z-index:1;}
+.footer-logo-wrap{margin-bottom:14px;}
+.footer-logo-img{width:52px;height:52px;object-fit:contain;border-radius:14px;}
 .footer-mark{
-  width:38px;height:38px;background:var(--accent);
-  border-radius:10px;display:inline-flex;align-items:center;
-  justify-content:center;font-weight:900;color:var(--dark-text);
-  margin-bottom:12px;font-family:'Barlow Condensed',sans-serif;font-size:17px;
+  width:52px;height:52px;background:var(--accent);
+  border-radius:14px;align-items:center;justify-content:center;
+  font-weight:900;color:var(--dark-text);margin:0 auto;
+  font-family:'Barlow Condensed',sans-serif;font-size:22px;
 }
-footer p{color:var(--muted);font-size:13px;margin-bottom:4px;}
-footer strong{color:var(--white);}
+.footer-name{font-size:18px;font-weight:900;letter-spacing:4px;font-family:'Barlow Condensed',sans-serif;color:var(--white);margin-bottom:3px;}
+.footer-tag{font-size:9px;color:var(--accent);letter-spacing:2.5px;text-transform:uppercase;font-weight:600;margin-bottom:14px;}
+.footer-credit{color:var(--muted);font-size:13px;margin-bottom:4px;}
+.footer-credit strong{color:var(--white);}
+.footer-copy{font-size:11px;color:var(--muted2);}
+
+/* ── NEWSLETTER MODAL ── */
+.modal-news{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.88);backdrop-filter:blur(16px);z-index:1000;justify-content:center;align-items:center;}
+.modal-news-content{
+  background:linear-gradient(145deg,rgba(255,255,255,0.07),rgba(255,255,255,0.03));
+  border:1px solid rgba(255,255,255,0.11);
+  border-radius:28px;padding:2.8rem;max-width:440px;width:90%;
+  position:relative;overflow:hidden;text-align:center;
+}
+.modal-news-content::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.2),transparent);}
+.modal-news-glow{position:absolute;top:-60px;right:-60px;width:180px;height:180px;border-radius:50%;background:radial-gradient(circle,rgba(200,240,74,0.1),transparent 70%);pointer-events:none;}
+.news-emoji{font-size:2.4rem;margin-bottom:1rem;display:block;}
+.news-title{font-size:2rem;font-weight:900;font-family:'Barlow Condensed',sans-serif;margin-bottom:.5rem;color:var(--white);}
+.news-sub{color:var(--muted);font-size:13.5px;line-height:1.7;margin-bottom:1.8rem;}
+.news-input-wrap{position:relative;margin-bottom:10px;}
+.news-input{
+  background:rgba(255,255,255,0.05);border:1px solid var(--glass-border);
+  border-radius:10px;padding:13px 16px;color:white;width:100%;
+  font-size:14px;font-family:'Barlow',sans-serif;
+  transition:border-color .2s;outline:none;
+}
+.news-input:focus{border-color:rgba(200,240,74,0.4);}
+.news-input::placeholder{color:var(--muted2);}
+.btn-news-submit{
+  background:var(--accent);color:var(--dark-text);
+  padding:13px;border-radius:10px;
+  font-weight:700;font-size:14px;cursor:pointer;border:none;
+  font-family:'Barlow Condensed',sans-serif;letter-spacing:1px;
+  width:100%;transition:all .2s;position:relative;overflow:hidden;
+  margin-bottom:10px;
+}
+.btn-news-submit::after{content:'';position:absolute;top:0;left:-100%;width:60px;height:100%;background:rgba(255,255,255,0.3);transform:skewX(-20deg);transition:left .4s;}
+.btn-news-submit:hover::after{left:200%;}
+.btn-news-submit:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(200,240,74,0.25);}
+.btn-news-close{background:transparent;border:none;color:var(--muted);font-size:12px;cursor:pointer;padding:4px;transition:color .2s;}
+.btn-news-close:hover{color:var(--white);}
+.news-success{display:none;flex-direction:column;align-items:center;gap:.6rem;}
+.news-success-icon{font-size:2.8rem;}
+.news-success h3{font-size:1.7rem;font-weight:900;font-family:'Barlow Condensed',sans-serif;color:var(--accent);}
+.news-success p{color:var(--muted);font-size:13px;}
 
 /* ── FADE UP ── */
 .fade-up{opacity:0;transform:translateY(28px);transition:opacity .65s,transform .65s;}
@@ -484,7 +529,33 @@ footer strong{color:var(--white);}
   </div>
 </div>
 
-<!-- NAV -->
+<!-- NEWSLETTER MODAL -->
+<div id="newsModal" class="modal-news">
+  <div class="modal-news-content">
+    <div class="modal-news-glow"></div>
+    <div id="newsForm">
+      <span class="news-emoji">🚀</span>
+      <div class="news-title">SÉ EL PRIMERO</div>
+      <p class="news-sub">MACNOFIT está en desarrollo activo. Regístrate y recibe acceso anticipado, novedades y la beta gratuita antes que nadie.</p>
+      <div class="news-input-wrap">
+        <input class="news-input" type="text" id="newsName" placeholder="Tu nombre">
+      </div>
+      <div class="news-input-wrap">
+        <input class="news-input" type="email" id="newsEmail" placeholder="tu@correo.com">
+      </div>
+      <button class="btn-news-submit" onclick="submitNewsletter()">🔥 QUIERO ACCESO ANTICIPADO</button>
+      <button class="btn-news-close" onclick="closeNewsModal()">No me interesa</button>
+    </div>
+    <div class="news-success" id="newsSuccess">
+      <div class="news-success-icon">🎉</div>
+      <h3>¡YA ESTÁS DENTRO!</h3>
+      <p>Te avisaremos cuando lancemos la beta.<br>Prepárate para transformarte.</p>
+      <button class="btn-primary" onclick="closeNewsModal()" style="margin-top:1rem;">Cerrar</button>
+    </div>
+  </div>
+</div>
+
+
 <nav>
   <div class="nav-inner">
     <a class="logo" href="#">
@@ -526,7 +597,7 @@ footer strong{color:var(--white);}
       <p class="hero-sub">Rutinas adaptativas, rachas, medallas y ranking social. Todo gratis, para siempre.</p>
       <div class="hero-btns">
         <button class="btn-primary" onclick="showToast('🎉 Comienza tu transformación')">COMENZAR GRATIS</button>
-        <button class="btn-ghost" onclick="openModal()">Ver demo</button>
+        <button class="btn-ghost" onclick="openNewsModal()">Ver demo</button>
       </div>
       <div class="glass-strip">
         <span>☕</span>
@@ -538,7 +609,7 @@ footer strong{color:var(--white);}
       </div>
       <div class="hero-stats">
         <div class="stat"><h3><span id="counter1" data-target="120">0</span>K</h3><p>Usuarios</p></div>
-        <div class="stat"><h3><span id="counter2" data-target="49">0</span>★</h3><p>Calificación</p></div>
+        <div class="stat"><h3><span id="counter2-int">4</span>.<span id="counter2-dec">9</span>★</h3><p>Calificación</p></div>
         <div class="stat"><h3><span id="counter3" data-target="1">0</span>M</h3><p>Entrenos</p></div>
       </div>
     </div>
@@ -715,7 +786,7 @@ footer strong{color:var(--white);}
         <p class="b2b-sub">Plataformas fitness premium con tu branding. Tu nombre, tus colores, tu comunidad.</p>
         <div class="b2b-btns">
           <button class="btn-primary" onclick="showToast('📩 En breve te contactamos por WhatsApp')">Quiero mi app</button>
-          <button class="btn-outline" onclick="openModal()">Ver demo</button>
+          <button class="btn-outline" onclick="openNewsModal()">Ver demo</button>
         </div>
       </div>
       <div class="b2b-card">
@@ -767,9 +838,15 @@ footer strong{color:var(--white);}
 
 <!-- FOOTER -->
 <footer>
-  <div class="footer-mark">M</div>
-  <p>MACNOFIT · Fitness Intelligence</p>
-  <p>Desarrollado por <strong>Roberto Macedo</strong></p>
+  <div class="footer-logo-wrap">
+    <img src="images/logo1.png" alt="MACNOFIT" class="footer-logo-img"
+         onerror="this.style.display='none';this.nextElementSibling.style.display='inline-flex';">
+    <div class="footer-mark" style="display:none;">M</div>
+  </div>
+  <p class="footer-name">MACNOFIT</p>
+  <p class="footer-tag">Fitness Intelligence</p>
+  <p class="footer-credit">Desarrollado por <strong>Roberto Macedo</strong></p>
+  <p class="footer-copy">© 2025 MACNOFIT · Todos los derechos reservados</p>
 </footer>
 
 <script>
@@ -847,25 +924,41 @@ function setupStreak(){
 
 /* ── COUNTERS ── */
 function initCounters(){
-  const targets = [120, 49, 1];
   const obs = new IntersectionObserver(entries=>{
     entries.forEach(e=>{
       if(e.isIntersecting){
-        targets.forEach((t,i)=>{
-          const el = document.getElementById(`counter${i+1}`);
-          let curr=0, inc=t/55;
-          const iv = setInterval(()=>{
-            curr+=inc;
-            if(curr>=t){ el.textContent=t; clearInterval(iv); }
-            else el.textContent=Math.floor(curr);
-          },22);
-        });
+        // counter1: 0 → 120
+        let c1=0; const iv1=setInterval(()=>{ c1+=2; if(c1>=120){document.getElementById('counter1').textContent=120;clearInterval(iv1);}else document.getElementById('counter1').textContent=c1; },22);
+        // counter3: 0 → 1
+        let c3=0,inc3=1/55; const iv3=setInterval(()=>{ c3+=inc3; if(c3>=1){document.getElementById('counter3').textContent=1;clearInterval(iv3);}else document.getElementById('counter3').textContent=Math.floor(c3); },22);
         obs.disconnect();
       }
     });
   },{threshold:0.3});
   const stats = document.querySelector('.hero-stats');
   if(stats) obs.observe(stats);
+}
+
+/* ── NEWSLETTER MODAL ── */
+function openNewsModal(){
+  document.getElementById('newsModal').style.display='flex';
+  document.getElementById('newsForm').style.display='block';
+  document.getElementById('newsSuccess').style.display='none';
+}
+function closeNewsModal(){ document.getElementById('newsModal').style.display='none'; }
+document.getElementById('newsModal').addEventListener('click', e=>{ if(e.target===e.currentTarget) closeNewsModal(); });
+
+function submitNewsletter(){
+  const name  = document.getElementById('newsName').value.trim();
+  const email = document.getElementById('newsEmail').value.trim();
+  if(!email || !email.includes('@')){ showToast('⚠️ Ingresa un correo válido'); return; }
+  // Aquí puedes conectar a Mailchimp, ConvertKit, Resend, etc.
+  // Por ahora guardamos en localStorage como prueba
+  const leads = JSON.parse(localStorage.getItem('macnofit_leads')||'[]');
+  leads.push({ name, email, date: new Date().toISOString() });
+  localStorage.setItem('macnofit_leads', JSON.stringify(leads));
+  document.getElementById('newsForm').style.display='none';
+  document.getElementById('newsSuccess').style.display='flex';
 }
 
 /* ── FADE UP ── */
